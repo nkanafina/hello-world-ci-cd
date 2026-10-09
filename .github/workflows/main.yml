@@ -1,0 +1,30 @@
+name: CI/CD Hello World
+
+on: [push] # Кодты репозиторийге жіберген сайын автоматты түрде іске қосылады
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Кодты жүктеп алу
+        uses: actions/checkout@v4
+
+      - name: Python-ды баптау
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Бағдарламаны тексеру (Test)
+        run: |
+          echo "Тест басталуда..."
+          python hello.py
+          echo "Тест сәтті аяқталды!"
+
+  build:
+    needs: test # Build кезеңі тек Test сәтті өткеннен кейін ғана басталады
+    runs-on: ubuntu-latest
+    steps:
+      - name: Жобаны құрастыру (Build симуляциясы)
+        run: |
+          echo "Жоба құрастырылуда..."
+          echo "Сәтті құрастырылды!"
